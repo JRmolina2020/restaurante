@@ -16,7 +16,7 @@ class CategorieController extends Controller
     {
       // if (!$request->ajax()) return redirect('/');
         $categorie = Categorie::orderBy('id', 'DESC')->get();
-       return $categorie;
+         return $categorie;
     }
 
 

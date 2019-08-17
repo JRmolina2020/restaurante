@@ -1,22 +1,27 @@
 <template>
   <div>
-    <search text="text"></search>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Categoria</th>
-          <th>Estado</th>
-          <th>Opciones</th>
-        </tr>
+    <input class="form-control" placeholder="Buscar categoria" v-model="filters.name.value" />
+    <v-table
+      :data="categorie"
+      :filters="filters"
+      :currentPage.sync="currentPage"
+      :pageSize="7"
+      @totalPagesChanged="totalPages = $event"
+      class="table table-bordered mt-3"
+    >
+      <thead slot="head">
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Opciones</th>
       </thead>
-      <tbody id="myTable">
-        <tr v-for="(item, index) in categorie" :key="index">
-          <td>{{item.name}}</td>
+      <tbody slot="body" slot-scope="{displayData}">
+        <tr v-for="row in displayData" :key="row.id">
+          <td>{{ row.name }}</td>
           <td>
             <button
-              v-if="item.is_active"
+              v-if="row.is_active"
               type="button"
-              v-on:click.prevent="Desactivar(item)"
+              v-on:click.prevent="Desactivar(row)"
               class="btn btn-success btn-sm"
             >
               <i class="fas fa-power-off"></i>
@@ -24,30 +29,35 @@
             <button
               v-else
               type="button"
-              v-on:click.prevent="Activar(item)"
+              v-on:click.prevent="Activar(row)"
               class="btn btn-danger btn-sm"
             >
               <i class="fas fa-power-off"></i>
             </button>
           </td>
-
           <td>
-            <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',item)">Editar</button>
+            <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',row)">Editar</button>
             <button
               type="button"
-              v-on:click.prevent="Eliminar(item)"
+              v-on:click.prevent="Eliminar(row)"
               class="btn btn-danger btn-sm"
             >Eliminar</button>
           </td>
         </tr>
       </tbody>
-    </table>
+    </v-table>
+    <center>
+      <smart-pagination :currentPage.sync="currentPage" :totalPages="totalPages" />
+    </center>
   </div>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import search from "../search.vue";
 import spinner from "../spinner.vue";
+import SmartTable from "vuejs-smart-table";
+Vue.use(SmartTable);
+
 export default {
   name: "list",
   components: {
@@ -55,7 +65,13 @@ export default {
     spinner
   },
   data() {
-    return {};
+    return {
+      filters: {
+        name: { value: "", keys: ["name", "is_active"] }
+      },
+      currentPage: 1,
+      totalPages: 0
+    };
   },
   computed: {
     ...mapState(["categorie"])

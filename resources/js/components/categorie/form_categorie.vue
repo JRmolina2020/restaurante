@@ -13,6 +13,7 @@
               :class="{ 'is-invalid': submitted && errors.has('name') }"
               placeholder="nombre categoria"
             />
+            <small class="form-text text-muted">Nombre categoria</small>
             <div
               v-if="submitted && errors.has('name')"
               class="invalid-feedback"
@@ -76,7 +77,7 @@ export default {
     },
     clear() {
       this.form.name = null;
-      this.form.id=null;
+      this.form.id = null;
       this.$validator.reset();
     }
   }

@@ -3,6 +3,7 @@ window.Vue = require('vue');
 window.Axios = require('axios');
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } from 'vee-validate';
+
 window.Swal = require('sweetalert2');
 import store from './store';
 Vue.use(VeeValidate);
