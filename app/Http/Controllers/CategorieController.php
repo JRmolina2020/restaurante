@@ -41,7 +41,8 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+    Categorie::find($id)->update($request->all());
+    return;
     }
     /**
      * Update the specified resource in storage.

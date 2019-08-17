@@ -1,10 +1,10 @@
 <template>
   <div class="row">
     <div class="col-lg-6 mt-3">
-      <form_categorie></form_categorie>
+      <form_categorie ref="form_categorie"></form_categorie>
     </div>
     <div class="col-lg-6 mt-3">
-      <list></list>
+      <list v-on:show="show"></list>
     </div>
   </div>
 </template>
@@ -16,6 +16,11 @@ export default {
   components: {
     list,
     form_categorie
+  },
+  methods: {
+    show(item) {
+      this.$refs.form_categorie.show(item);
+    }
   }
 };
 </script>

@@ -32,7 +32,7 @@
           </td>
 
           <td>
-            <button type="button" class="btn btn-warning btn-sm">Editar</button>
+            <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',item)">Editar</button>
             <button
               type="button"
               v-on:click.prevent="Eliminar(item)"
@@ -42,7 +42,6 @@
         </tr>
       </tbody>
     </table>
-    <nav></nav>
   </div>
 </template>
 <script>
