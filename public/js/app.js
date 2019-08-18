@@ -1764,6 +1764,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   $_veeValidate: {
     validator: "new"
@@ -1925,7 +1932,7 @@ Vue.use(vuejs_smart_table__WEBPACK_IMPORTED_MODULE_3__["default"]);
     List: function List() {
       this.$store.dispatch("Listarcategorie");
     },
-    Eliminar: function Eliminar(item) {
+    destroy: function destroy(item) {
       var _this = this;
 
       var url = "Categoria/" + item.id;
@@ -1944,29 +1951,29 @@ Vue.use(vuejs_smart_table__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
             _this.List();
           })["catch"](function (err) {
-            Swal.fire("No se puede eliminar!", "success");
+            Swal.fire({
+              type: "error",
+              title: "Oops...",
+              text: "".concat(item.name, " tiene productos asignados")
+            });
           });
         }
       });
     },
-    Activar: function Activar(item) {
+    activate: function activate(item) {
       var _this2 = this;
 
       var url = "/Categoria/activar/" + item.id;
       axios.put(url).then(function (response) {
         _this2.List();
-
-        console.log(response.data);
       });
     },
-    Desactivar: function Desactivar(item) {
+    deactivate: function deactivate(item) {
       var _this3 = this;
 
       var url = "/Categoria/desactivar/" + item.id;
       axios.put(url).then(function (response) {
         _this3.List();
-
-        console.log(response.data);
       });
     }
   }
@@ -53327,16 +53334,23 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c("div"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary btn-sm",
-                attrs: { disabled: _vm.errors.any(), type: "submit" }
-              },
-              [_vm._v("Guardar")]
-            ),
+            _vm.form.id == null
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-sm",
+                    attrs: { disabled: _vm.errors.any(), type: "submit" }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning btn-sm",
+                    attrs: { disabled: _vm.errors.any(), type: "submit" }
+                  },
+                  [_c("i", { staticClass: "material-icons" }, [_vm._v("edit")])]
+                ),
             _vm._v(" "),
             _c(
               "button",
@@ -53413,7 +53427,7 @@ var render = function() {
             data: _vm.categorie,
             filters: _vm.filters,
             currentPage: _vm.currentPage,
-            pageSize: 7
+            pageSize: 6
           },
           on: {
             "update:currentPage": function($event) {
@@ -53448,11 +53462,17 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.Desactivar(row)
+                                    return _vm.deactivate(row)
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-power-off" })]
+                              [
+                                _c(
+                                  "i",
+                                  { staticClass: "material-icons md-18" },
+                                  [_vm._v("power_settings_new")]
+                                )
+                              ]
                             )
                           : _c(
                               "button",
@@ -53462,11 +53482,17 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.Activar(row)
+                                    return _vm.activate(row)
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-power-off" })]
+                              [
+                                _c(
+                                  "i",
+                                  { staticClass: "material-icons md-18" },
+                                  [_vm._v("power_settings_new")]
+                                )
+                              ]
                             )
                       ]),
                       _vm._v(" "),
@@ -53493,7 +53519,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.Eliminar(row)
+                                return _vm.destroy(row)
                               }
                             }
                           },
@@ -53617,9 +53643,11 @@ var staticRenderFns = [
               ]),
               _vm._v(" "),
               _c("li", { staticClass: "nav-item" }, [
-                _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                  _vm._v("Order")
-                ])
+                _c(
+                  "a",
+                  { staticClass: "nav-link", attrs: { href: "producto" } },
+                  [_vm._v("Productos")]
+                )
               ])
             ])
           ]

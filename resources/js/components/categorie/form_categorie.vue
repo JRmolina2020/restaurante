@@ -19,8 +19,15 @@
               class="invalid-feedback"
             >{{ errors.first('name') }}</div>
           </div>
-          <div></div>
-          <button :disabled="errors.any()" type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          <button
+            v-if="form.id==null"
+            :disabled="errors.any()"
+            type="submit"
+            class="btn btn-primary btn-sm"
+          >Guardar</button>
+          <button v-else :disabled="errors.any()" type="submit" class="btn btn-warning btn-sm">
+            <i class="material-icons">edit</i>
+          </button>
           <button type="button" v-on:click.prevent="clear" class="btn btn-danger btn-sm">Cancelar</button>
         </form>
       </div>

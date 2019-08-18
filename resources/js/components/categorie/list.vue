@@ -5,7 +5,7 @@
       :data="categorie"
       :filters="filters"
       :currentPage.sync="currentPage"
-      :pageSize="7"
+      :pageSize="6"
       @totalPagesChanged="totalPages = $event"
       class="table table-bordered mt-3"
     >
@@ -21,25 +21,25 @@
             <button
               v-if="row.is_active"
               type="button"
-              v-on:click.prevent="Desactivar(row)"
+              v-on:click.prevent="deactivate(row)"
               class="btn btn-success btn-sm"
             >
-              <i class="fas fa-power-off"></i>
+              <i class="material-icons md-18">power_settings_new</i>
             </button>
             <button
               v-else
               type="button"
-              v-on:click.prevent="Activar(row)"
+              v-on:click.prevent="activate(row)"
               class="btn btn-danger btn-sm"
             >
-              <i class="fas fa-power-off"></i>
+              <i class="material-icons md-18">power_settings_new</i>
             </button>
           </td>
           <td>
             <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',row)">Editar</button>
             <button
               type="button"
-              v-on:click.prevent="Eliminar(row)"
+              v-on:click.prevent="destroy(row)"
               class="btn btn-danger btn-sm"
             >Eliminar</button>
           </td>
@@ -83,7 +83,7 @@ export default {
     List() {
       this.$store.dispatch("Listarcategorie");
     },
-    Eliminar(item) {
+    destroy(item) {
       let url = "Categoria/" + item.id;
       Swal.fire({
         title: `Esta seguro de eliminar ha ${item.name}`,
@@ -106,23 +106,26 @@ export default {
               this.List();
             })
             .catch(err => {
-              Swal.fire("No se puede eliminar!", "success");
+              Swal.fire({
+                type: "error",
+                title: "Oops...",
+                text: `${item.name} tiene productos asignados`
+              });
             });
         }
       });
     },
-    Activar(item) {
+    activate(item) {
       let url = "/Categoria/activar/" + item.id;
       axios.put(url).then(response => {
         this.List();
-        console.log(response.data);
       });
     },
-    Desactivar(item) {
+
+    deactivate(item) {
       let url = "/Categoria/desactivar/" + item.id;
       axios.put(url).then(response => {
         this.List();
-        console.log(response.data);
       });
     }
   }

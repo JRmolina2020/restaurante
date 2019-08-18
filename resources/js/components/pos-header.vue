@@ -25,7 +25,7 @@
           <a class="nav-link" href="categoria">Categoria</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Order</a>
+          <a class="nav-link" href="producto">Productos</a>
         </li>
       </ul>
     </div>
