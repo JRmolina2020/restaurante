@@ -57,8 +57,38 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   public function destroy(Request $request, $id)
     {
-        //
+        if (!$request->ajax()) return redirect('/');
+        $product = Product::findOrFail($id);
+        $product->delete();
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activar(Request $request, $id)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $product = Product::findOrFail($id);
+        $product->is_active = '1';
+        $product->save();
+        return $product;
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivar(Request $request, $id)
+    {
+        if (!$request->ajax()) return redirect('/');
+        $product = Product::findOrFail($id);
+        $product->is_active = '0';
+        $product->save();
+        return $product;
     }
 }

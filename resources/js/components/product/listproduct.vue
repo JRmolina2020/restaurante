@@ -2,21 +2,39 @@
   <div>
     <input class="form-control" placeholder="Buscar categoria" v-model="filters.name.value" />
     <v-table
-      :data="categorie"
+      :data="product"
       :filters="filters"
       :currentPage.sync="currentPage"
-      :pageSize="6"
+      :pageSize="4"
       @totalPagesChanged="totalPages = $event"
       class="table table-bordered mt-3"
     >
       <thead slot="head">
         <th>Nombre</th>
+        <th>Precio</th>
+        <th>Descripcion</th>
+        <th>Categoria</th>
         <th>Estado</th>
         <th>Opciones</th>
       </thead>
       <tbody slot="body" slot-scope="{displayData}">
         <tr v-for="row in displayData" :key="row.id">
           <td>{{ row.name }}</td>
+          <td>{{ row.price }}</td>
+          <td>
+            <!-- description -->
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modeldescription"
+              @click="infodescription(row)"
+            >
+              <i class="material-icons md-18">keyboard_arrow_up</i>
+            </button>
+            <!-- end description -->
+          </td>
+          <td>{{row.name_categorie}}</td>
           <td>
             <button
               v-if="row.is_active"
@@ -36,19 +54,40 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',row)">Editar</button>
-            <button
-              type="button"
-              v-on:click.prevent="destroy(row)"
-              class="btn btn-danger btn-sm"
-            >Eliminar</button>
+            <button type="button" class="btn btn-warning btn-sm" @click="$emit('show',row)">
+              <i class="material-icons md-18">edit</i>
+            </button>
+            <button type="button" v-on:click.prevent="destroy(row)" class="btn btn-danger btn-sm">
+              <i class="material-icons md-18">delete_sweep</i>
+            </button>
           </td>
         </tr>
       </tbody>
     </v-table>
-    <center>
-      <smart-pagination :currentPage.sync="currentPage" :totalPages="totalPages" />
-    </center>
+    <smart-pagination :currentPage.sync="currentPage" :totalPages="totalPages" />
+    <!-- Modal info description start -->
+    <div
+      class="modal fade"
+      id="modeldescription"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="text-center">{{info.name}}</h5>
+            <img v-bind:src="info.image" class="img-fluid mx-auto d-block" />
+            <p class="text-center">{{info.description}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal description info -->
   </div>
 </template>
 <script>
@@ -68,21 +107,26 @@ export default {
         name: { value: "", keys: ["name", "is_active"] }
       },
       currentPage: 1,
-      totalPages: 0
+      totalPages: 0,
+      info: {
+        name: null,
+        description: null,
+        image: null
+      }
     };
   },
   computed: {
-    ...mapState(["categorie"])
+    ...mapState(["product"])
   },
   mounted() {
     this.List();
   },
   methods: {
     List() {
-      this.$store.dispatch("Listarcategorie");
+      this.$store.dispatch("Listarproducto");
     },
     destroy(item) {
-      let url = "Categoria/" + item.id;
+      let url = "Producto/" + item.id;
       Swal.fire({
         title: `Esta seguro de eliminar ha ${item.name}`,
         text: "Una vez eliminado el registro no se podra recuperar!",
@@ -114,18 +158,26 @@ export default {
       });
     },
     activate(item) {
-      let url = "/Categoria/activar/" + item.id;
+      let url = "Producto/activar/" + item.id;
       axios.put(url).then(response => {
         this.List();
       });
     },
 
     deactivate(item) {
-      let url = "/Categoria/desactivar/" + item.id;
+      let url = "Producto/desactivar/" + item.id;
       axios.put(url).then(response => {
         this.List();
+        
       });
+    },
+    infodescription(item) {
+      this.info.name = item.name;
+      this.info.description = item.description;
+      this.info.image = item.image;
     }
   }
 };
 </script>
+
+
