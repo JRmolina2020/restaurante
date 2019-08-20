@@ -18,6 +18,18 @@ class CategorieController extends Controller
         $categorie = Categorie::orderBy('id', 'DESC')->get();
          return $categorie;
     }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function selectCategorie()
+    {
+      // if (!$request->ajax()) return redirect('/');
+         $categorie = Categorie::where('is_active','=', '1')->select('id','name')->
+         orderBy('id','desc')->get();
+         return $categorie;
+    }
 
 
     /**

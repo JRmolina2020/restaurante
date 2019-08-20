@@ -9,6 +9,8 @@ Vue.use(VeeValidate);
 Validator.localize('es', es);
 import SmartTable from 'vuejs-smart-table';
 Vue.use(SmartTable);
+import VueCurrencyFilter from 'vue-currency-filter';
+Vue.use(VueCurrencyFilter);
 
 Vue.component('pos-header', require('./components/pos-header.vue').default);
 Vue.component('pos', require('./components/pos.vue').default);

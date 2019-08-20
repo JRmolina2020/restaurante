@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Product;
 
 class ProductController extends Controller
@@ -23,6 +24,7 @@ class ProductController extends Controller
                 'products.image',
                 'products.is_active',
                 'categories.name as name_categorie',
+                'categories.id as idc'
             )->orderBy('products.id', 'desc')->get();
         return $product;
     }
@@ -36,7 +38,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    if (!$request->ajax()) return redirect('/');
+     $product=$request->all();
+    if ($request->hasFile('image')) {
+    $product['image']=$request->file('image')->store('uploads','public');
+    }else{
+    $product['image']='uploads/default.png';
+    }
+    Product::insert($product);
+    return;
     }
 
     /**
@@ -48,7 +58,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+     Product::find($id)->update($request->all());
+    return;
     }
 
     /**

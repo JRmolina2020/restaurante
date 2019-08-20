@@ -17,8 +17,10 @@ Route::resource('Categoria', 'CategorieController')->except([
     'show', 'create', 'edit'
 ]);
 
-Route::put('/Categoria/activar/{id}', 'CategorieController@activar');
-Route::put('/Categoria/desactivar/{id}', 'CategorieController@desactivar');
+
+Route::get('Categoria/select','CategorieController@selectCategorie');
+Route::put('Categoria/activar/{id}', 'CategorieController@activar');
+Route::put('Categoria/desactivar/{id}', 'CategorieController@desactivar');
 
 
 Route::resource('Producto', 'ProductController')->except([

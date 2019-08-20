@@ -8,16 +8,16 @@
               v-model="form.name"
               v-validate="'required|max:15|min:4|alpha_spaces'"
               type="text"
-              name="name"
+              name="nombre"
               class="form-control"
-              :class="{ 'is-invalid': submitted && errors.has('name') }"
+              :class="{ 'is-invalid': submitted && errors.has('nombre') }"
               placeholder="nombre categoria"
             />
             <small class="form-text text-muted">Nombre categoria</small>
             <div
-              v-if="submitted && errors.has('name')"
+              v-if="submitted && errors.has('nombre')"
               class="invalid-feedback"
-            >{{ errors.first('name') }}</div>
+            >{{ errors.first('nombre') }}</div>
           </div>
           <button
             v-if="form.id==null"

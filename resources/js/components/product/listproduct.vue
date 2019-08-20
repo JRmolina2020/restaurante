@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="form-control" placeholder="Buscar categoria" v-model="filters.name.value" />
+    <input class="form-control" placeholder="Buscar producto" v-model="filters.name.value" />
     <v-table
       :data="product"
       :filters="filters"
@@ -20,7 +20,7 @@
       <tbody slot="body" slot-scope="{displayData}">
         <tr v-for="row in displayData" :key="row.id">
           <td>{{ row.name }}</td>
-          <td>{{ row.price }}</td>
+          <td>{{ row.price | currency }}</td>
           <td>
             <!-- description -->
             <button
@@ -78,7 +78,10 @@
         <div class="modal-content">
           <div class="modal-body">
             <h5 class="text-center">{{info.name}}</h5>
-            <img v-bind:src="info.image" class="img-fluid mx-auto d-block" />
+            <div v-if="info.image==null">no hay imagen</div>
+            <div v-else>
+              <img :src="`storage/${info.image}`" class="img-fluid mx-auto d-block" />
+            </div>
             <p class="text-center">{{info.description}}</p>
           </div>
           <div class="modal-footer">
@@ -104,7 +107,10 @@ export default {
   data() {
     return {
       filters: {
-        name: { value: "", keys: ["name", "is_active"] }
+        name: {
+          value: "",
+          keys: ["name", "is_active", "price", "categorie_id"]
+        }
       },
       currentPage: 1,
       totalPages: 0,
@@ -168,7 +174,6 @@ export default {
       let url = "Producto/desactivar/" + item.id;
       axios.put(url).then(response => {
         this.List();
-        
       });
     },
     infodescription(item) {
