@@ -42,8 +42,6 @@ class ProductController extends Controller
      $product=$request->all();
     if ($request->hasFile('image')) {
     $product['image']=$request->file('image')->store('uploads','public');
-    }else{
-    $product['image']='uploads/default.png';
     }
     Product::insert($product);
     return;
@@ -58,8 +56,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
      Product::find($id)->update($request->all());
-    return;
+     return;
     }
 
     /**
@@ -68,11 +67,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   public function destroy(Request $request, $id)
+ public function destroy(Request $request, $id)
     {
         if (!$request->ajax()) return redirect('/');
         $product = Product::findOrFail($id);
+        if (Storage::delete('public/'.$product->image)) {
         $product->delete();
+        }
+
     }
     /**
      * Remove the specified resource from storage.

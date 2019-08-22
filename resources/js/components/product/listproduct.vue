@@ -67,6 +67,7 @@
     <smart-pagination :currentPage.sync="currentPage" :totalPages="totalPages" />
     <!-- Modal info description start -->
     <div
+      v-if="info.show"
       class="modal fade"
       id="modeldescription"
       tabindex="-1"
@@ -78,7 +79,7 @@
         <div class="modal-content">
           <div class="modal-body">
             <h5 class="text-center">{{info.name}}</h5>
-            <div v-if="info.image==null">no hay imagen</div>
+            <div v-if="info.image==='null'">no</div>
             <div v-else>
               <img :src="`storage/${info.image}`" class="img-fluid mx-auto d-block" />
             </div>
@@ -117,7 +118,8 @@ export default {
       info: {
         name: null,
         description: null,
-        image: null
+        image: null,
+        show: false
       }
     };
   },
@@ -180,6 +182,7 @@ export default {
       this.info.name = item.name;
       this.info.description = item.description;
       this.info.image = item.image;
+      this.info.show = true;
     }
   }
 };

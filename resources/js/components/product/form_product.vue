@@ -192,6 +192,8 @@ export default {
       this.form.description = item.description;
       this.form.categorie_id = item.idc;
       this.form.image = item.image;
+
+      console.log(this.form);
     },
 
     clear() {
@@ -201,6 +203,7 @@ export default {
       this.form.id = null;
       this.form.categorie_id = null;
       this.$validator.reset();
+      this.form.image = null;
       $("#imagen").val("");
     }
   }

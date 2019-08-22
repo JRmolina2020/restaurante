@@ -2315,6 +2315,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.description = item.description;
       this.form.categorie_id = item.idc;
       this.form.image = item.image;
+      console.log(this.form);
     },
     clear: function clear() {
       this.form.name = null;
@@ -2323,6 +2324,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.id = null;
       this.form.categorie_id = null;
       this.$validator.reset();
+      this.form.image = null;
       $("#imagen").val("");
     }
   }
@@ -2443,6 +2445,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2465,7 +2468,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       info: {
         name: null,
         description: null,
-        image: null
+        image: null,
+        show: false
       }
     };
   },
@@ -2525,6 +2529,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.info.name = item.name;
       this.info.description = item.description;
       this.info.image = item.image;
+      this.info.show = true;
     }
   }
 });
@@ -54827,49 +54832,51 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "modeldescription",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "modelTitleId",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
+      _vm.info.show
+        ? _c(
             "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "modeldescription",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "modelTitleId",
+                "aria-hidden": "true"
+              }
+            },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("h5", { staticClass: "text-center" }, [
-                    _vm._v(_vm._s(_vm.info.name))
-                  ]),
-                  _vm._v(" "),
-                  _vm.info.image == null
-                    ? _c("div", [_vm._v("no hay imagen")])
-                    : _c("div", [
-                        _c("img", {
-                          staticClass: "img-fluid mx-auto d-block",
-                          attrs: { src: "storage/" + _vm.info.image }
-                        })
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("h5", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(_vm.info.name))
                       ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-center" }, [
-                    _vm._v(_vm._s(_vm.info.description))
+                      _vm._v(" "),
+                      _vm.info.image === "null"
+                        ? _c("div", [_vm._v("no")])
+                        : _c("div", [
+                            _c("img", {
+                              staticClass: "img-fluid mx-auto d-block",
+                              attrs: { src: "storage/" + _vm.info.image }
+                            })
+                          ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(_vm.info.description))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
                   ])
-                ]),
-                _vm._v(" "),
-                _vm._m(0)
-              ])
+                ]
+              )
             ]
           )
-        ]
-      )
+        : _vm._e()
     ],
     1
   )
