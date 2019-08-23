@@ -26,6 +26,6 @@ Route::put('Categoria/desactivar/{id}', 'CategorieController@desactivar');
 Route::resource('Producto', 'ProductController')->except([
     'show', 'create', 'edit'
 ]);
-
+Route::get('Producto/filter','ProductController@productfilter');
 Route::put('Producto/activar/{id}', 'ProductController@activar');
 Route::put('Producto/desactivar/{id}', 'ProductController@desactivar');

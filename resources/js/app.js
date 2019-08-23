@@ -13,7 +13,10 @@ import VueCurrencyFilter from 'vue-currency-filter';
 Vue.use(VueCurrencyFilter);
 
 Vue.component('pos-header', require('./components/pos-header.vue').default);
-Vue.component('pos', require('./components/pos.vue').default);
+Vue.component(
+    'wellcome_pos',
+    require('./components/wellcome_pos.vue').default
+);
 Vue.component(
     'categorie',
     require('./components/categorie/categorie.vue').default

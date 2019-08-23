@@ -1,4 +1,4 @@
 @extends('layout')
 @section('content')
-<pos></pos>
+<wellcome_pos></wellcome_pos>
 @endsection

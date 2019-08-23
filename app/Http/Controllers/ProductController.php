@@ -29,6 +29,25 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function productfilter(){
+
+      $product = Product::where("products.is_active",1)
+      ->join('categories', 'products.categorie_id', '=', 'categories.id')
+      ->select(
+        'products.id',
+        'products.name',
+        'products.price',
+        'products.description',
+        'products.image',
+        'products.is_active',
+        'categories.name as name_categorie',
+        'categories.id as idc')
+      ->where("categories.is_active",1)
+      ->orderBy('products.id', 'desc')->get();
+      return $product;
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
